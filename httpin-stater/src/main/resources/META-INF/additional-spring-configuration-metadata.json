@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "caijiajia.mvc.bindAddress",
+      "type": "java.lang.String",
+      "description": "webServer绑定地址.",
+      "defaultValue": "0.0.0.0"
+    }
+  ]
+}
+

@@ -1,0 +1,18 @@
+{
+    "datacenter":"ali_bj_dev_03",
+    "disable_host_node_id":false,
+    "server":false,
+    "ui":false,
+    "data_dir":"tmp/data",
+    "retry_join":[
+        "172.18.10.111",
+        "172.18.10.112",
+        "172.18.10.113"
+    ],
+    "node_meta":{
+        "role":"client"
+    },
+    "gossip_lan":{
+        "probe_timeout":"1600ms"
+    }
+}

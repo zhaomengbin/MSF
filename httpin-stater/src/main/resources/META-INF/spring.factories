@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.example.httpin.HttpInAutoConfiguration
+
+org.springframework.context.ApplicationContextInitializer=\
+  com.example.httpin.init.CustomerApplicationContextInitializer
