@@ -10,8 +10,8 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>framework-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>springboot-demo</artifactId>
+    <version>${project.app.version}</version>
 
     <name>framework-demo</name>
     <!-- FIXME change it to the project's website -->
@@ -20,17 +20,32 @@
     <dependencies>
         <dependency>
             <groupId>com.example</groupId>
+            <artifactId>httpin-starter</artifactId>
+            <version>${project.starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
             <artifactId>httpout-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>amqp-starter</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>registry-starter</artifactId>
+            <version>${project.starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>telemetry-starter</artifactId>
+            <version>${project.starter.version}</version>
         </dependency>
     </dependencies>
     <build>
-        <finalName>${jar.name}</finalName>
+        <finalName>${final.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -7,27 +7,22 @@
     <groupId>com.example</groupId>
     <artifactId>framework-parent</artifactId>
     <version>1.0.0</version>
+    <relativePath/>
   </parent>
 
   <groupId>com.example</groupId>
-  <artifactId>amqp-starter</artifactId>
+  <artifactId>telemetry-starter</artifactId>
   <version>${project.starter.version}</version>
-  <packaging>jar</packaging>
 
-  <name>amqp-starter</name>
+  <name>telemetry-starter</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
-
   <dependencies>
     <dependency>
       <groupId>com.example</groupId>
       <artifactId>framework-comm</artifactId>
       <version>${project.starter.version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.springframework.amqp</groupId>
-      <artifactId>spring-rabbit</artifactId>
-    </dependency>
   </dependencies>
+
 </project>
