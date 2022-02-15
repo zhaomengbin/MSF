@@ -1,13 +1,16 @@
 # Getting Started
-### Maven依赖管理
-* 父 pom 的 <dependencyManager>中的version 优先级高于传递依赖的版本，如某个starter pom依赖的某个jar指定版本会被应用父pom覆盖
-* 直接依赖版本 > 间接依赖的版本
-* 相同长度的版本 > 先声明覆盖后声明
-    * 调整顺序 （期望的jar版本优先）
-    * 前者exclusion排除
-* <optional>true</optional> 父pom jar若指定这个，子模块pom必须显示依赖才能正式引用，否则不会。
-* 多模块依赖
-    * 子模块pom必须有<packing>jar</packing> 否则其它模块jar包编译时，报类不存在
+### maven依赖管理
+* 依赖jar版本优先级
+  * 直接依赖 > 间接依赖
+  * 相同路径，先声明 > 后声明
+  * 父pom 版本 > 间接依赖版本
+ 
+* 是否引入父pom依赖 ？
+  * 若父pom jar包<optional>true</optional>,子类希望引入依赖，需要显示声明
+ 
+* 多模块jar依赖构建
+  * 被依赖的jar pom 必须<packing>jar</packing> 否则会报类不存在。
+  * 
 ### 服务注册
 #### consul
 每个Node节点都需要一个守护进程consul agent进程，负责服务的健康检查、服务的注册、服务的查询、本地服务信息缓存等。
@@ -15,7 +18,7 @@
 *1. 启动consul agent*
 
 `
-congsul agent -config-file=/consul/client.json
+ congsul agent -config-file=/consul/client.json
 `
 
 *2. 服务自动注册*
@@ -52,7 +55,7 @@ congsul agent -config-file=/consul/client.json
     return filterRegistrationBean;
     }
 #### 日志打印
-若应用不设置日志打印格式，默认按TraceEnvironmentPostProcessor处理。
+ 若应用不设置日志打印格式，默认按TraceEnvironmentPostProcessor处理。
 
 #### span采集ingore列表
 * 注入健康检查、心跳检测、高频率短周期性查询等span忽略不采集
