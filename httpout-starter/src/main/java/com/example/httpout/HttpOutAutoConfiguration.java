@@ -16,8 +16,4 @@ import org.springframework.context.annotation.Import;
 @ComponentInfo(name = "httpout-starter",version = "1.0.0")
 public class HttpOutAutoConfiguration
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
 }

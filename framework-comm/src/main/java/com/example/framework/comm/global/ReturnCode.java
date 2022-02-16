@@ -13,7 +13,8 @@ public enum ReturnCode {
     InvalidParam("请求参数无效"),
     InvalidSign("sign签名无效"),
     ServerError("服务内部错误"),
-    UnKnownError("未知错误");
+    UnKnownHost("未知的Host"),
+    UnKnownError("未知的错误");
 
     private String value;
 

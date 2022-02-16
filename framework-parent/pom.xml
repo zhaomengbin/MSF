@@ -172,16 +172,4 @@
 
 
 </build>
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://registry.caijj.net/repository/service-repo-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://registry.caijj.net/repository/service-repo-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>

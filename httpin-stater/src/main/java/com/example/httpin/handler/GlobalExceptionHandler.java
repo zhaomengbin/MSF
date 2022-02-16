@@ -1,7 +1,9 @@
-package com.example.framework.comm.global;
+package com.example.httpin.handler;
 
 import com.example.framework.comm.exception.ClientException;
 import com.example.framework.comm.exception.ServerException;
+import com.example.framework.comm.global.ErrorResponse;
+import com.example.framework.comm.global.ReturnCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.TypeMismatchException;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import java.util.HashMap;
@@ -79,10 +83,20 @@ public class GlobalExceptionHandler {
             String msg = error.getDefaultMessage();
             list.add(String.format("(%s=%s : %s)", field, value, msg));
         });
-        ErrorResponse errorResponse=this.init(HttpStatus.BAD_REQUEST.value(),ReturnCode.InvalidParam.name(),String.format("校验不通过=> %s",list.toString()));
+        ErrorResponse errorResponse=this.init(HttpStatus.BAD_REQUEST.value(), ReturnCode.InvalidParam.name(),String.format("校验不通过=> %s",list.toString()));
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * 一般是RestTemplate引起的
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = {ResourceAccessException.class})
+    public ResponseEntity<ErrorResponse> restClientExceptionHandler(ResourceAccessException e){
+        ErrorResponse errorResponse= this.init(HttpStatus.UNPROCESSABLE_ENTITY.value(), ReturnCode.UnKnownHost.name(),e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 
     /**
      * Web请求异常，一般是4XX
@@ -90,7 +104,7 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(value = {ServletException.class,HttpMessageNotReadableException.class,TypeMismatchException.class})
-    public ResponseEntity<ErrorResponse> exceptionHandler(Exception e){
+    public ResponseEntity<ErrorResponse> webExceptionHandler(Exception e){
         HttpStatus httpStatus=HttpStatus.BAD_REQUEST;
         ErrorResponse errorResponse= this.init(httpStatus.value(),ReturnCode.InvalidParam.name(),e.getMessage());
         /**
@@ -119,8 +133,8 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = Throwable.class)
-    public ResponseEntity<ErrorResponse> exceptionHandler(Throwable e){
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ErrorResponse> unknownExceptionHandler(Exception e){
         ErrorResponse errorResponse=this.init(HttpStatus.UNPROCESSABLE_ENTITY.value(),ReturnCode.UnKnownError.name(),e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }

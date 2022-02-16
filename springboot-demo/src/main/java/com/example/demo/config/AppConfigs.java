@@ -18,4 +18,5 @@ public class AppConfigs {
     public RestTemplate loadbalancedRestTemplate() {
         return new RestTemplate();
     }
+
 }

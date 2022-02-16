@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -104,7 +105,12 @@ public class HelloController {
 		return this.serviceUrl(serviceName);
 	}
 	public String getFirstProduct(String serviceName) {
-		return this.restTemplate.getForObject(String.format("http://%s/%s/clusters",serviceName,serviceName), String.class);
+		try {
+			return this.restTemplate.getForObject(String.format("http://%s/%s/clusters",serviceName,serviceName), String.class);
+		} catch (RestClientException e) {
+			log.error("异常",e);
+			throw e;
+		}
 	}
 	public List<ServiceInstance> serviceUrl(String serviceName) {
 		List<ServiceInstance> list = discoveryClient.getInstances(serviceName);

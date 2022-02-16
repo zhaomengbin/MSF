@@ -11,8 +11,4 @@ import org.springframework.context.annotation.Configuration;
 @ComponentInfo(name = "telemetry-starter",version = "1.0.0")
 public class TelemetryAutoConfiguration
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
 }
