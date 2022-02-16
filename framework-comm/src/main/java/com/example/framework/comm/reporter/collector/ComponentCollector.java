@@ -61,7 +61,7 @@ public class ComponentCollector extends AbstractCollector implements Application
                     put(ATTR_VERSION, componentInfo.version());
                 }});
             } catch (ClassNotFoundException e) {
-                log.warn("ClassNotFoundException for CaijjComponentInfo", e);
+                log.warn("ClassNotFoundException for ", e);
             }
         }
         log.info("ComponentCollector scan finished.");
