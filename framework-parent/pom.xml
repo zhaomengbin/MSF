@@ -172,4 +172,16 @@
 
 
 </build>
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>nexus</name>
+            <url>http://198.18.0.11/repository/service-repo-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>nexus</name>
+            <url>http://198.18.0.11/repository/service-repo-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
