@@ -21,7 +21,6 @@
       <groupId>com.example</groupId>
       <artifactId>framework-comm</artifactId>
       <version>${project.starter.version}</version>
-      <scope>compile</scope>
     </dependency>
     <!--feign支持-->
     <dependency>
