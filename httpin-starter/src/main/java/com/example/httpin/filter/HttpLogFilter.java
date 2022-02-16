@@ -24,9 +24,9 @@ public class HttpLogFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getRequestURI().toString().contains("/actuator/")){
-            return;
-        }
+//        if(request.getRequestURI().toString().contains("/actuator/")){
+//            return;
+//        }
         long start=System.currentTimeMillis();
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);

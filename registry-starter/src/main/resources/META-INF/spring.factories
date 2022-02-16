@@ -1,2 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.example.httpout.HttpOutAutoConfiguration
+com.example.registry.RegistryAutoConfiguration
+
+org.springframework.context.ApplicationListener=\
+com.example.registry.listener.RegistrationEventListener
