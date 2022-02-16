@@ -1,4 +1,4 @@
-package com.example.framework.comm.reporter;
+package com.example.telemetry.reporter;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

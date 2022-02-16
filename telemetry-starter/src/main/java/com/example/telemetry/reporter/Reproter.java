@@ -1,4 +1,4 @@
-package com.example.framework.comm.reporter;
+package com.example.telemetry.reporter;
 
 /**
  * 〈上报器〉

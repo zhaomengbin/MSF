@@ -1,7 +1,7 @@
-package com.example.framework.comm.reporter.policy;
+package com.example.telemetry.reporter.policy;
 
-import com.example.framework.comm.reporter.Reproter;
-import com.example.framework.comm.reporter.InputData;
+import com.example.telemetry.reporter.Reproter;
+import com.example.telemetry.reporter.InputData;
 import lombok.extern.slf4j.Slf4j;
 
 /**

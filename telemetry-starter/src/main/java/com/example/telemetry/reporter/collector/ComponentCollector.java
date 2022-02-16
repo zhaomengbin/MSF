@@ -1,8 +1,8 @@
-package com.example.framework.comm.reporter.collector;
+package com.example.telemetry.reporter.collector;
 
 import com.example.framework.comm.annotation.ComponentInfo;
-import com.example.framework.comm.reporter.AbstractCollector;
-import com.example.framework.comm.reporter.InputData;
+import com.example.telemetry.reporter.AbstractCollector;
+import com.example.telemetry.reporter.InputData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
