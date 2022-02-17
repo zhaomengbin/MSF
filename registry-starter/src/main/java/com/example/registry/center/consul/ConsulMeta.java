@@ -1,4 +1,4 @@
-package com.example.registry.consul;
+package com.example.registry.center.consul;
 
 /**
  * 〈Consul服务注册-metadata〉

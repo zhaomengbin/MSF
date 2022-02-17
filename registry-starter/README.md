@@ -12,13 +12,14 @@ AbstractAutoServiceRegistration类的内部方法基本protected的，不方便�
 * private Registration registration;
 
 ## 注册中心元数据定义
+主要包含如下：
+* 服务定义（Service Definition)
+* 健康检查定义 （HealthCheck Definition)
 
-
-## 服务定义（Service Definition)
 一般情况下，需要对服务定义填充自定义的属性，如serviceName、HealthCheck等。
 ### consul
-仅需@Bean ConsulAutoRegistration,并对AutoServiceRegistrationProperties 做初始化即可。
-## 健康检查定义 （HealthCheck Definition)
+实现 ConsulRegistrationCustomizer接口，并注入IOC容器即可。
+注：兼容支持原始Properties配置
 
 ## 设计要点
 * 启动自动注册

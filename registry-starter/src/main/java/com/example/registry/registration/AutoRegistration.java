@@ -1,11 +1,16 @@
 package com.example.registry.registration;
 
+import com.example.registry.center.consul.ConsulMeta;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.cloud.client.serviceregistry.ServiceRegistry;
+import org.springframework.cloud.consul.serviceregistry.ConsulAutoRegistration;
 import org.springframework.scheduling.TaskScheduler;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 〈服务注册入口〉
@@ -18,7 +23,7 @@ import org.springframework.scheduling.TaskScheduler;
  */
 @Slf4j
 public class AutoRegistration implements InitializingBean {
-    public static final Long REGISTRY_DURATION=20000L;
+    public static final Long REGISTRY_DURATION=60000L;
 
     private ServiceRegistry serviceRegistry;
     private Registration registration;
@@ -46,13 +51,20 @@ public class AutoRegistration implements InitializingBean {
 
     /**
      * 周期注册
+     * 每次注册从服务端获取最新应用信息（权重等）
      */
     private void cycleRegistor(){
         taskScheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                log.info(" 注册consul服务");
-                serviceRegistry.register(registration);
+                if(registration instanceof ConsulAutoRegistration){
+                    log.info(" 周期性注册consul服务");
+                    ConsulAutoRegistration consulAutoRegistration= (ConsulAutoRegistration)registration;
+                    consulAutoRegistration.getService().getMeta().put(ConsulMeta.REGISTRY_TIME, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+                    //TODO 读取应用在集群中最新状态，重新更新MetaData
+                    serviceRegistry.register(consulAutoRegistration);
+                }
             }
         },REGISTRY_DURATION);
     }
