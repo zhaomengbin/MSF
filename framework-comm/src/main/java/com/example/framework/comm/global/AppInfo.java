@@ -1,5 +1,6 @@
 package com.example.framework.comm.global;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
+@Builder
 public class AppInfo {
     private String appName;
     private String clusterName;

@@ -1,5 +1,7 @@
 package com.example.framework.comm.global;
 
+import lombok.Data;
+
 /**
  * 〈〉
  *
@@ -7,6 +9,7 @@ package com.example.framework.comm.global;
  * @create 2022/2/16
  * @since 1.0.0
  */
+@Data
 public class BulidInfo {
-
+    private String version;
 }
