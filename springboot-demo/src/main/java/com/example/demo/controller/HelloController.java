@@ -93,7 +93,7 @@ public class HelloController {
 	 */
 	@GetMapping("/feign")
 	public String feign(@RequestParam("serviceName") String serviceName) {
-		return swaggerplusFeignClient.getSwaggerJson(serviceName,"");
+		return 	swaggerplusFeignClient.getSwaggerJson(serviceName,"");
 	}
 	@GetMapping("/amqp")
 	public String send(@RequestParam("serviceName") String serviceName) {

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
  * @since 1.0.0
  */
 @Data
-public class ClientException extends RuntimeException{
+public class BizClientException extends RuntimeException{
 
     private int httpCode;
     private String errCode;
@@ -20,21 +20,21 @@ public class ClientException extends RuntimeException{
 
 
 
-    public ClientException(ReturnCode returnCode){
+    public BizClientException(ReturnCode returnCode){
         super(returnCode.value());
         this.httpCode= HttpStatus.BAD_REQUEST.value();
         this.errCode=returnCode.name();
         this.errMsg=returnCode.value();
     }
 
-    public ClientException(String errCode,String errMsg){
+    public BizClientException(String errCode, String errMsg){
         super(errMsg);
         this.httpCode= HttpStatus.BAD_REQUEST.value();
         this.errCode=errCode;
         this.errMsg=errMsg;
     }
 
-    public ClientException(int httpCode,String errCode,String errMsg){
+    public BizClientException(int httpCode, String errCode, String errMsg){
         super(errMsg);
         this.httpCode= httpCode;
         this.errCode=errCode;

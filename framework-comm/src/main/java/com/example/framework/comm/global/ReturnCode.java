@@ -11,10 +11,13 @@ public enum ReturnCode {
     SUCCESS("请求成功"),
     NotFound("请求资源不存在"),
     InvalidParam("请求参数无效"),
+    Timeout("请求超时"),
+    ConnectTimeout("请求连接超时"),
+    ReadTimeout("请求读超时"),
     InvalidSign("sign签名无效"),
     ServerError("服务内部错误"),
     UnKnownHost("未知的Host"),
-    UnKnownError("未知的错误");
+    UnKnownError("系统异常");
 
     private String value;
 

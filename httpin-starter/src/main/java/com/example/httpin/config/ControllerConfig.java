@@ -18,6 +18,7 @@ public class ControllerConfig {
     @Bean
     @ConditionalOnWebApplication(type=ConditionalOnWebApplication.Type.SERVLET)
     public GlobalExceptionHandler globalExceptionHandler(){
+
         return new GlobalExceptionHandler();
     }
 

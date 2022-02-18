@@ -1,13 +1,57 @@
 # Http客户端
 * Feign (主要)
 * RestTemplate (辅助)
-    * RestTemplate -> BlockingLoadBalancerClient.execute(获得具体ServiceInstance) ->LoadBalancerRequestFactory.createRequest【封装请求，即将服务名替换为真实的IP或域名】
+
 说明：一般以OkHttp作为Http Client，具备连接池功能，可以提升性能。
       RetryLoadBalancerInterceptor 控制负载均衡是否重试
 
 
-
 ## Feign 是如何整合 OkHttp ，LoadBalancer ?
+首先，spring-cloud 2021.x使用BlockingLoadBalancerClient作为默认的负载均衡实现。
+
+若spring.cloud.loadbalancer.retry.enabled=true(默认)，则使用RetryableFeignBlockingLoadBalancerClient；
+
+若spring.cloud.loadbalancer.retry.enabled=false，则使用FeignBlockingLoadBalancerClient；
+
+两者都持有BlockingLoadBalancerClient 对象。
+
+其次，启用okhttp时
+* feign.okhttp.enabled=true
+* feign.httpclient.enabled=false 
+
+BlockingLoadBalancerClient根据choose返回的最近serviceInstance封装http请求时，通过OkHttpClient发送请求。
+
+## Feign / LoadBalancer / OkHttpClient / Sentinel 多种超时参数有何关系？
+* feign包下的Request.Options类中的Timeout定义会覆盖OkHttpClient的超时定义。（详见OkHttpClient.class)
+  * Feign: connectTimeout=10s, readTimeout=60s (默认)
+  * OkHttpClient: connectTimout=10s, readTimeout=10s, writeTimeout=10s （默认）
+    
+实验
+### Feign 与OkHttpClient
+      public feign.Response execute(feign.Request input, feign.Request.Options options)
+      throws IOException {
+    okhttp3.OkHttpClient requestScoped;
+    if (delegate.connectTimeoutMillis() != options.connectTimeoutMillis()
+        || delegate.readTimeoutMillis() != options.readTimeoutMillis()
+        || delegate.followRedirects() != options.isFollowRedirects()) {
+      requestScoped = delegate.newBuilder()
+          .connectTimeout(options.connectTimeoutMillis(), TimeUnit.MILLISECONDS)
+          .readTimeout(options.readTimeoutMillis(), TimeUnit.MILLISECONDS)
+          .followRedirects(options.isFollowRedirects())
+          .build();
+    } else {
+      requestScoped = delegate;
+    }
+    Request request = toOkHttpRequest(input);
+    Response response = requestScoped.newCall(request).execute();
+    return toFeignResponse(response, input).toBuilder().request(input).build();
+      }
+      }
+      
+
+
+
+#源码分析
 翻了源码，发现在FeignLoadBalancerAutoConfiguration中 @Import OkHttpFeignLoadBalancerConfiguration.class，里面有如下代码：
 
 	@Bean
@@ -17,6 +61,19 @@
 			LoadBalancerClientFactory loadBalancerClientFactory) {
 		OkHttpClient delegate = new OkHttpClient(okHttpClient);
 		return new FeignBlockingLoadBalancerClient(delegate, loadBalancerClient, loadBalancerClientFactory);
+	}
+
+    @Bean
+	@ConditionalOnMissingBean
+	@ConditionalOnClass(name = "org.springframework.retry.support.RetryTemplate")
+	@ConditionalOnBean(LoadBalancedRetryFactory.class)
+	@ConditionalOnProperty(value = "spring.cloud.loadbalancer.retry.enabled", havingValue = "true",
+			matchIfMissing = true)
+	public Client feignRetryClient(LoadBalancerClient loadBalancerClient, okhttp3.OkHttpClient okHttpClient,
+			LoadBalancedRetryFactory loadBalancedRetryFactory, LoadBalancerClientFactory loadBalancerClientFactory) {
+		OkHttpClient delegate = new OkHttpClient(okHttpClient);
+		return new RetryableFeignBlockingLoadBalancerClient(delegate, loadBalancerClient, loadBalancedRetryFactory,
+				loadBalancerClientFactory);
 	}
 
 
@@ -52,6 +109,13 @@
     }
     return loadBalancerResponse.getServer();
     }
+* 构造真实URL地址
+   参阅：FeignBlockingLoadBalancerClient.class源码
+      
+      String reconstructedUrl = loadBalancerClient.reconstructURI(instance, originalUri).toString();
+
+
+
 ### ReactiveLoadBalancer 具体实现是什么？
 进一步源码分析，发现ReactiveLoadBalancer是一个接口，目前提供两种实现:
 * RandomLoadBalancer
@@ -59,8 +123,8 @@
 
 [切换负载均衡算法指南](https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#switching-between-the-load-balancing-algorithms)
 
-    
 
+sleuth包下的TracingFeignClient 对Feign的request装配Trace信息
 主要配置
 * FeignClientProperties
 * FeignHttpClientProperties

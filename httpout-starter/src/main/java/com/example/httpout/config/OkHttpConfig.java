@@ -13,6 +13,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * 〈〉
@@ -30,6 +31,10 @@ public class OkHttpConfig {
         return new OkHttpInterceptor();
     }
 
+    @Bean
+    public RestTemplate restTemplate(){
+        return  new RestTemplate();
+    }
 
     private SentinelOkHttpConfig sentinelOkHttpConfig(){
         return new SentinelOkHttpConfig(new DemoOkHttpResourceExtractor(), new DemoOkhttpFallBack());

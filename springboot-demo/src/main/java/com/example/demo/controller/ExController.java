@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.service.RabbitService;
-import com.example.framework.comm.exception.ClientException;
+import com.example.framework.comm.exception.BizClientException;
 import com.example.framework.comm.global.ReturnCode;
 import com.example.demo.feign.DemoFeignClient;
 import com.example.demo.feign.SwaggerplusFeignClient;
@@ -50,18 +50,18 @@ public class ExController {
 
 	@GetMapping("/exc/1")
 	public void ex() {
-		throw new ClientException(ReturnCode.InvalidParam);
+		throw new BizClientException(ReturnCode.InvalidParam);
 	}
 
 
 	@GetMapping("/exc/2")
 	public void ex2() {
-		throw new ClientException(ReturnCode.NotFound.name(),ReturnCode.NotFound.value());
+		throw new BizClientException(ReturnCode.NotFound.name(),ReturnCode.NotFound.value());
 	}
 
 	@GetMapping("/exc/3")
 	public void ex3() {
-		throw new ClientException(500,ReturnCode.NotFound.name(),ReturnCode.NotFound.value());
+		throw new BizClientException(500,ReturnCode.NotFound.name(),ReturnCode.NotFound.value());
 	}
 
 

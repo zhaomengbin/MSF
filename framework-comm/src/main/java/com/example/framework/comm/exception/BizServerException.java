@@ -12,28 +12,28 @@ import org.springframework.http.HttpStatus;
  * @since 1.0.0
  */
 @Data
-public class ServerException extends RuntimeException{
+public class BizServerException extends RuntimeException{
     private int httpCode;
     private String errCode;
     private String errMsg;
 
 
 
-    public ServerException(ReturnCode returnCode){
+    public BizServerException(ReturnCode returnCode){
         super(returnCode.value());
         this.httpCode= HttpStatus.INTERNAL_SERVER_ERROR.value();
         this.errCode=returnCode.name();
         this.errMsg=returnCode.value();
     }
 
-    public ServerException(String errCode,String errMsg){
+    public BizServerException(String errCode, String errMsg){
         super(errMsg);
         this.httpCode= HttpStatus.INTERNAL_SERVER_ERROR.value();
         this.errCode=errCode;
         this.errMsg=errMsg;
     }
 
-    public ServerException(int httpCode,String errCode,String errMsg){
+    public BizServerException(int httpCode, String errCode, String errMsg){
         super(errMsg);
         this.httpCode= httpCode;
         this.errCode=errCode;
