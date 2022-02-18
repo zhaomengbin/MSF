@@ -1,8 +1,11 @@
 # Http客户端
 * Feign (主要)
 * RestTemplate (辅助)
-
+    * RestTemplate -> BlockingLoadBalancerClient.execute(获得具体ServiceInstance) ->LoadBalancerRequestFactory.createRequest【封装请求，即将服务名替换为真实的IP或域名】
 说明：一般以OkHttp作为Http Client，具备连接池功能，可以提升性能。
+      RetryLoadBalancerInterceptor 控制负载均衡是否重试
+
+
 
 ## Feign 是如何整合 OkHttp ，LoadBalancer ?
 翻了源码，发现在FeignLoadBalancerAutoConfiguration中 @Import OkHttpFeignLoadBalancerConfiguration.class，里面有如下代码：

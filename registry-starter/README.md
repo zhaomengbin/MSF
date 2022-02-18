@@ -1,6 +1,10 @@
 #服务注册
 支持适配主流的服务注册中心，如consul 、nacos 、kubernets 等
 
+**Required** 
+* consul注册中心功能验证：安装好consul server集群 、本地安装并启动consul agent
+
+
 ## Spring Boot启动注册
 原理：spring-cloud-commons包中有个AbstractAutoServiceRegistration类，负责服务注册。
 以consul为例：调用ConsulAutoServiceRegistration.registry()接口。

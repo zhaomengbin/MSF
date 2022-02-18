@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Slf4j
 public class AutoRegistration implements InitializingBean {
-    public static final Long REGISTRY_DURATION=60000L;
+    public static final Long REGISTRY_DURATION=600000L;
 
     private ServiceRegistry serviceRegistry;
     private Registration registration;

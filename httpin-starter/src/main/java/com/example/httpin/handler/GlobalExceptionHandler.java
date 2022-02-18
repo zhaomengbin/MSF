@@ -4,6 +4,7 @@ import com.example.framework.comm.exception.ClientException;
 import com.example.framework.comm.exception.ServerException;
 import com.example.framework.comm.global.ErrorResponse;
 import com.example.framework.comm.global.ReturnCode;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.TypeMismatchException;
@@ -33,6 +34,7 @@ import java.util.Map;
  * @create 2022/2/9
  * @since 1.0.0
  */
+@Slf4j
 @ControllerAdvice(annotations = {RestController.class, Controller.class})
 public class GlobalExceptionHandler {
 
@@ -135,6 +137,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ErrorResponse> unknownExceptionHandler(Exception e){
+        log.error("请求异常",e);
         ErrorResponse errorResponse=this.init(HttpStatus.UNPROCESSABLE_ENTITY.value(),ReturnCode.UnKnownError.name(),e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
