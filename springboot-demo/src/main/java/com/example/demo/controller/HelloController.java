@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.feign.RegistryplusFeignClient;
 import com.example.demo.service.RabbitService;
 import com.example.framework.comm.threadlocal.ParameterThreadLocal;
 import com.example.demo.feign.DemoFeignClient;
@@ -42,6 +43,8 @@ public class HelloController {
 	private DemoFeignClient demoFeignClient;
 	@Autowired
 	private SwaggerplusFeignClient swaggerplusFeignClient;
+	@Autowired
+	private RegistryplusFeignClient registryplusFeignClient;
 	@Resource
 	private RabbitService rabbitService;
 
@@ -95,6 +98,12 @@ public class HelloController {
 	public String feign(@RequestParam("serviceName") String serviceName) {
 		return 	swaggerplusFeignClient.getSwaggerJson(serviceName,"");
 	}
+
+	@GetMapping("/feign2")
+	public String getclusters() {
+		return 	registryplusFeignClient.getClusters();
+	}
+
 	@GetMapping("/amqp")
 	public String send(@RequestParam("serviceName") String serviceName) {
 		return rabbitService.send(serviceName);

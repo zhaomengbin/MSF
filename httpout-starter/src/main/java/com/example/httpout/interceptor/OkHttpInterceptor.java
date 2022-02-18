@@ -33,13 +33,17 @@ public class OkHttpInterceptor implements Interceptor {
         try {
             response = chain.proceed(request);
         } catch (IOException e) {
-            Map<String,String> extraInfo=new ConcurrentHashMap<>();
-            extraInfo.put("Url",url);
-            if(e instanceof SocketTimeoutException){
-                throw new HttpClientException(HttpStatus.REQUEST_TIMEOUT.value(), ReturnCode.Timeout.name(),e.getCause().getMessage(),extraInfo);
-            }else {
-                throw new HttpClientException(HttpStatus.REQUEST_TIMEOUT.value(), ReturnCode.Timeout.name(),e.getCause().getMessage(),extraInfo);
-            }
+                Map<String,String> extraInfo=new ConcurrentHashMap<>();
+                extraInfo.put("Url",url);
+                String errMsg=e.getMessage();
+                if(e.getCause()!=null){
+                    errMsg=e.getCause().getMessage();
+                }
+                if(e instanceof SocketTimeoutException){
+                    throw new HttpClientException(HttpStatus.REQUEST_TIMEOUT.value(), ReturnCode.Timeout.name(),errMsg,extraInfo);
+                }else {
+                    throw new HttpClientException(HttpStatus.REQUEST_TIMEOUT.value(), ReturnCode.Timeout.name(),errMsg,extraInfo);
+                }
 
         }
 
