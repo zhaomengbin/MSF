@@ -15,7 +15,7 @@
 *1. 启动consul agent*
 
 `
-congsul agent -config-file=/consul/client.json
+congsul agent -config-file=/consul/client.json -bind=本地ip -client=0.0.0.0
 `
 
 *2. 服务自动注册*

@@ -149,7 +149,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ErrorResponse> unknownExceptionHandler(Exception e){
-        log.error("请求异常",e);
         ErrorResponse errorResponse=this.init(HttpStatus.UNPROCESSABLE_ENTITY.value(),ReturnCode.UnKnownError.name(),e.getMessage(),null);
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }

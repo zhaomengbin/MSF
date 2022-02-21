@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.feign.RegistryplusFeignClient;
 import com.example.demo.service.RabbitService;
 import com.example.framework.comm.threadlocal.ParameterThreadLocal;
-import com.example.demo.feign.DemoFeignClient;
+import com.example.demo.feign.ProviderFeignClient;
 import com.example.demo.feign.SwaggerplusFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -40,7 +40,7 @@ public class HelloController {
 	RestTemplate restTemplate;
 
 	@Autowired
-	private DemoFeignClient demoFeignClient;
+	private ProviderFeignClient providerFeignClient;
 	@Autowired
 	private SwaggerplusFeignClient swaggerplusFeignClient;
 	@Autowired
@@ -91,12 +91,11 @@ public class HelloController {
 	/**
 	 * 添加spring-cloud-starter-loadbalancer时，自动启用spring-cloud-starter-loadbalancer 作为负载均衡client
 	 *
-	 * @param serviceName
 	 * @return
 	 */
-	@GetMapping("/feign")
-	public String feign(@RequestParam("serviceName") String serviceName) {
-		return 	swaggerplusFeignClient.getSwaggerJson(serviceName,"");
+	@GetMapping("/feign/provider")
+	public String feign() {
+		return 	providerFeignClient.print();
 	}
 
 	@GetMapping("/feign2")

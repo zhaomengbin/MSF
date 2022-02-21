@@ -9,7 +9,8 @@
 		<module>httpin-starter</module>
 		<module>httpout-starter</module>
 		<module>amqp-starter</module>
-		<module>springboot-demo</module>
+		<module>demo-consumer</module>
+		<module>demo-provider</module>
 		<module>registry-starter</module>
 		<module>telemetry-starter</module>
 	</modules>

@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>springboot-demo</artifactId>
+    <artifactId>demo-consumer</artifactId>
     <version>${project.app.version}</version>
 
-    <name>framework-demo</name>
+    <name>demo-consumer</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 

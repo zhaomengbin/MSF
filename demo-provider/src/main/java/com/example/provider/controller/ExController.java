@@ -1,12 +1,12 @@
-package com.example.demo.controller;
+package com.example.provider.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.demo.service.RabbitService;
+import com.example.provider.service.RabbitService;
 import com.example.framework.comm.exception.BizClientException;
 import com.example.framework.comm.global.ReturnCode;
-import com.example.demo.feign.DemoFeignClient;
-import com.example.demo.feign.SwaggerplusFeignClient;
-import com.example.demo.vo.ReqBean;
+import com.example.provider.feign.DemoFeignClient;
+import com.example.provider.feign.SwaggerplusFeignClient;
+import com.example.provider.vo.ReqBean;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;

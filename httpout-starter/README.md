@@ -124,6 +124,12 @@ BlockingLoadBalancerClient根据choose返回的最近serviceInstance封装http�
 [切换负载均衡算法指南](https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#switching-between-the-load-balancing-algorithms)
 
 
+
+##路由策略
+
+服务列表 -> 服务分类 -> 策略编排 -
+
+
 sleuth包下的TracingFeignClient 对Feign的request装配Trace信息
 主要配置
 * FeignClientProperties
